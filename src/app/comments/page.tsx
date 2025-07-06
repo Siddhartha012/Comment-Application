@@ -1,6 +1,6 @@
 'use client';
 
-import { useSession } from 'next-auth/react';
+import { useSession, signOut } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import CommentList from '@/components/CommentList';
 import CommentForm from '@/components/CommentForm';
@@ -9,20 +9,48 @@ export default function CommentsPage() {
   const { data: session, status } = useSession();
   const [comments, setComments] = useState([]);
 
+  /*
   useEffect(() => {
     fetch('/api/comments')
       .then((res) => res.json())
       .then((data) => setComments(data));
   }, []);
+*/
+
+useEffect(() => {
+  if (session) {
+    fetch('/api/comments')
+      .then((res) => res.json())
+      .then((data) => setComments(data));
+  }
+}, [session]);
 
   if (status === 'loading') return <p>Loading...</p>;
   if (!session) return <p>Please login to view comments.</p>;
 
   return (
-    <div className="p-4 max-w-2xl mx-auto">
+
+  <div className="p-4 max-w-2xl mx-auto">
+      {/* Logout button */}
+      <div className="flex justify-end mb-4">
+        <button
+          onClick={() => signOut({ callbackUrl: '/login' })}
+          className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+        >
+          Logout
+        </button>
+      </div>
+
       <h1 className="text-2xl font-bold mb-4">Comments</h1>
-      <CommentForm onSuccess={(newComment) => setComments([newComment, ...comments])} />
+
+      <CommentForm
+        onSuccess={(newComment) => setComments([newComment, ...comments])}
+      />
       <CommentList comments={comments} />
     </div>
+
+    
   );
 }
+
+
