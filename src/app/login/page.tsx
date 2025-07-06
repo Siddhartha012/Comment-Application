@@ -9,6 +9,7 @@ export default function LoginPage() {
   const [password, setPassword] = useState('password123');
 
   const handleLogin = async () => {
+    /*
     const res = await signIn('credentials', {
       redirect: true,
       email,
@@ -20,6 +21,14 @@ export default function LoginPage() {
   } else {
     setError('Invalid credentials');
   }
+    */
+
+  await signIn('credentials', {
+      redirect: true,
+      email,
+      password,
+      callbackUrl: '/comments',
+    });
 
   };
 
