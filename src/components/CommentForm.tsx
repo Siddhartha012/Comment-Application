@@ -3,9 +3,12 @@
 
 import { useState, useEffect } from 'react';
 
+import { Comment } from '@/types/comment';
+
+
 interface CommentFormProps {
   parentId?: string | null;
-  onSuccess: (comment: any) => void;
+  onSuccess: (comment: Comment) => void;
   initialContent?: string;
   commentId?: string;
   mode?: 'create' | 'edit';

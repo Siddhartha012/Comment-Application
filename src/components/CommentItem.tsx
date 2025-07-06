@@ -3,8 +3,9 @@
 
 import { useState } from 'react';
 import CommentForm from './CommentForm';
+import { Comment } from '@/types/comment';
 
-export default function CommentItem({ comment }: any) {
+export default function CommentItem({ comment }: Comment) {
   const [showReply, setShowReply] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [replies, setReplies] = useState(comment.replies || []);
@@ -83,7 +84,7 @@ export default function CommentItem({ comment }: any) {
       {showReply && (
         <CommentForm
           parentId={comment.id}
-          onSuccess={(reply: any) => {
+          onSuccess={(reply: Comment) => {
             setReplies([reply, ...replies]);
             setShowReply(false);
           }}
@@ -91,7 +92,7 @@ export default function CommentItem({ comment }: any) {
       )}
 
       {replies.length > 0 &&
-        replies.map((r: any) => (
+        replies.map((r: Comment) => (
           <CommentItem key={r.id} comment={r} />
         ))}
     </div>
