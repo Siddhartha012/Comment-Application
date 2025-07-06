@@ -1,3 +1,32 @@
+/*import { NextRequest, NextResponse } from 'next/server';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/auth';
+import prisma from '@/lib/db';
+
+export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
+  const session = await getServerSession(authOptions);
+  if (!session) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
+  const id = params.id;
+
+  const comment = await prisma.comment.findUnique({ where: { id } });
+
+  if (!comment || comment.authorId !== session.user.id) {
+    return NextResponse.json({ error: 'Forbidden or Not Found' }, { status: 403 });
+  }
+
+  const deleted = await prisma.comment.update({
+    where: { id },
+    data: {
+      deletedAt: new Date(),
+    },
+  });
+
+  return NextResponse.json(deleted);
+}
+*/
 
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/db';
