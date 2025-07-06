@@ -29,14 +29,19 @@ export default function CommentForm({
   const submitComment = async () => {
     if (!content.trim()) return;
 
+    const body = mode === 'edit'
+  ? JSON.stringify({ content })             // Only content for edit
+  : JSON.stringify({ content, parentId });
+
     const res = await fetch(
       mode === 'edit' && commentId
-        ? `/api/comments/${commentId}`
+        ? `/api/comments/${commentId}/edit`
         : '/api/comments',
       {
         method: mode === 'edit' ? 'PATCH' : 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ content, parentId }),
+        body,
+        
       }
     );
 
