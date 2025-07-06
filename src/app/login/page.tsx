@@ -15,6 +15,12 @@ export default function LoginPage() {
       password,
       callbackUrl: '/comments',
     });
+  if (res?.ok) {
+    router.push('/comments');
+  } else {
+    setError('Invalid credentials');
+  }
+
   };
 
   return (

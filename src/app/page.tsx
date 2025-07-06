@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
 export default function Home() {
-  const { data: session, status } = useSession();
+  const { status } = useSession();
   const router = useRouter();
 
   useEffect(() => {
@@ -14,7 +14,7 @@ export default function Home() {
     } else if (status === 'unauthenticated') {
       router.push('/login');
     }
-  }, [status]);
+  }, [status, router]);
 
   return <p>Redirecting...</p>;
 }
