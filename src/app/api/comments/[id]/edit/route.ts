@@ -10,9 +10,7 @@ export async function PATCH(req: NextRequest) {
 //
 const session: Session | null = await getServerSession(authOptions);
 
-if (!session || !session.user || comment.authorId !== session.user.id) {
-  return NextResponse.json({ error: "Forbidden" }, { status: 403 });
-}
+
 //
 
   const { content } = await req.json();
@@ -26,6 +24,10 @@ if (!session || !session.user || comment.authorId !== session.user.id) {
   }
 
   const comment = await prisma.comment.findUnique({ where: { id } });
+
+  if (!session || !session.user || comment.authorId !== session.user.id) {
+  return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+}
 
   if (!comment || comment.authorId !== session.user.id) {
     return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
