@@ -4,14 +4,14 @@ const bcrypt = require('bcryptjs');
 const prisma = new PrismaClient();
 
 async function main() {
-  const hashedPassword = await bcrypt.hash('password456', 10);
+  const hashedPassword = await bcrypt.hash('password123', 10);    // give user password
 
   const user = await prisma.user.create({
     data: {
-      id: 'user-2',
-      name: 'testuser2',
-      email: 'test2@example.com',
-      password: hashedPassword,
+      id: 'user-1',      // give user id
+      name: 'testuser1',  // give uer name
+      email: 'test1@example.com', // give user email
+      password: hashedPassword, 
     },
   });
 

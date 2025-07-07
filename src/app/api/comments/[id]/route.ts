@@ -3,13 +3,10 @@ import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/db';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/lib/auth';
-import { Session } from "next-auth";
-
+import { Session } from 'next-auth';
 
 export async function DELETE(req: NextRequest) {
- // const session = await getServerSession(authOptions);
- const session: Session | null = await getServerSession(authOptions);
-
+  const session: Session | null = await getServerSession(authOptions);
   if (!session) {
     return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
   }
@@ -20,6 +17,7 @@ export async function DELETE(req: NextRequest) {
   if (!id) {
     return NextResponse.json({ error: 'Invalid comment ID' }, { status: 400 });
   }
+
 
   const comment = await prisma.comment.findUnique({ where: { id } });
 

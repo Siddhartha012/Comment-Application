@@ -2,6 +2,8 @@
 
 import { useSession, signOut } from 'next-auth/react';
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+
 import CommentList from '@/components/CommentList';
 import CommentForm from '@/components/CommentForm';
 import NotificationBell from '@/components/NotificationBell';
@@ -9,9 +11,17 @@ import NotificationBell from '@/components/NotificationBell';
 
 export default function CommentsPage() {
   const { data: session, status } = useSession();
+  const router = useRouter();
+
   const [comments, setComments] = useState([]);
 
  
+  useEffect(() => {
+    if (status === 'unauthenticated') {
+      router.replace('/login');
+    }
+  }, [status, router]);
+  
 
 useEffect(() => {
   if (session) {
