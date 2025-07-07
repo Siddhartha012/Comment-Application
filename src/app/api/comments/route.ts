@@ -3,7 +3,7 @@
 import {NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/db';
 //import { getToken } from "next-auth/jwt";
-import { getServerSession } from "next-auth";
+import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
 
 // POST a new comment (with optional parentId and notification trigger)
