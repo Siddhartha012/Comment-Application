@@ -16,8 +16,11 @@ export default function CommentsPage() {
   const router = useRouter();
 
   //const [comments, setComments] = useState([]);
-const [comments, setComments] = useState<Comment[]>([]);
+ //const [comments, setComments] = useState<Comment[]>([]);
 
+ type SafeComment = Omit<Comment, 'editedAt' | 'deletedAt'>;
+
+const [comments, setComments] = useState<SafeComment[]>([]);
  
   useEffect(() => {
     if (status === 'unauthenticated') {
