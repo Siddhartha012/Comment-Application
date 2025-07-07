@@ -4,6 +4,8 @@ import { useSession, signOut } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
+import type { Comment } from '@/types/comment';
+
 import CommentList from '@/components/CommentList';
 import CommentForm from '@/components/CommentForm';
 import NotificationBell from '@/components/NotificationBell';
@@ -13,9 +15,7 @@ export default function CommentsPage() {
   const { data: session, status } = useSession();
   const router = useRouter();
 
-  //const [comments, setComments] = useState([]);
- //const [comments, setComments] = useState<Comment[]>([]);
-
+  /*
 type SafeComment = {
   id: string;
   content: string;
@@ -25,7 +25,11 @@ type SafeComment = {
 };
 
 const [comments, setComments] = useState<SafeComment[]>([]);
- 
+ */
+
+
+  const [comments, setComments] = useState<Comment[]>([]); // ✅ Use full Comment type
+
   useEffect(() => {
     if (status === 'unauthenticated') {
       router.replace('/login');
@@ -37,7 +41,7 @@ useEffect(() => {
   if (session) {
     fetch('/api/comments')
       .then((res) => res.json())
-      .then((data) => setComments(data));
+      .then((data) => setComments(data as Comment[]));
   }
 }, [session]);
 
