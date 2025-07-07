@@ -14,3 +14,4 @@ export interface Comment {
   author: Author;
   replies?: Comment[];
 }
+

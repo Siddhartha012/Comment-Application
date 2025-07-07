@@ -5,12 +5,18 @@ import { useState } from 'react';
 import CommentForm from './CommentForm';
 import { Comment } from '@/types/comment';
 
-export default function CommentItem({ comment }: Comment) {
+type CommentItemProps = {
+  comment: Comment;
+  onUpdate?: (updated: Comment) => void;
+};
+
+export default function CommentItem({ comment }: CommentItemProps) {
   const [showReply, setShowReply] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [replies, setReplies] = useState(comment.replies || []);
   const [isDeleted, setIsDeleted] = useState(!!comment.deletedAt);
   const [localContent, setLocalContent] = useState(comment.content);
+
 
   const handleDelete = async () => {
     const res = await fetch(`/api/comments/${comment.id}`, {
