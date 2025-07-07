@@ -3,16 +3,25 @@ import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/lib/auth';
 import prisma from '@/lib/db';
+import { Session } from "next-auth";
 
 export async function PATCH(req: NextRequest) {
+  
   const session = await getServerSession(authOptions);
+
   if (!session) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
   const url = new URL(req.url);
-  const id = url.pathname.split('/').slice(-2, -1)[0]; // Extract ID from /comments/[id]/restore
+ // const id = url.pathname.split('/').slice(-2, -1)[0]; // Extract ID from /comments/[id]/restore
+  const id = url.pathname.split('/')[4]; // safer: extract from /api/comments/[id]/restore
 
+  if (!id) {
+    return NextResponse.json({ error: 'Invalid comment ID' }, { status: 400 });
+  }
+
+  
   const comment = await prisma.comment.findUnique({ where: { id } });
 
   if (!comment || comment.authorId !== session.user.id) {
