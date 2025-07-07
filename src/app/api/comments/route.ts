@@ -1,11 +1,11 @@
 
 
-import { NextResponse } from 'next/server';
+import {NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/db';
 import { getToken } from "next-auth/jwt";
 
 // POST a new comment (with optional parentId and notification trigger)
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
   const token = await getToken({ req }); // using JWT strategy
   if (!token || !token.id) {
     console.error("⛔ No token/session found!");
