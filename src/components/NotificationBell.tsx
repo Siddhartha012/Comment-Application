@@ -3,8 +3,11 @@
 
 import { useEffect, useState } from 'react';
 
+import type { Notification } from '@/types/notification';
+
 export default function NotificationBell() {
-  const [notifications, setNotifications] = useState([]);
+  //const [notifications, setNotifications] = useState([]);
+  const [notifications, setNotifications] = useState<Notification[]>([]);
 
   useEffect(() => {
     fetch('/api/notifications')
