@@ -2,15 +2,26 @@
 
 import {NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/db';
-import { getToken } from "next-auth/jwt";
+//import { getToken } from "next-auth/jwt";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
 
 // POST a new comment (with optional parentId and notification trigger)
 export async function POST(req: NextRequest) {
+  /* 
   const token = await getToken({ req }); // using JWT strategy
-  if (!token || !token.id) {
-    console.error("⛔ No token/session found!");
-    return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
-  }
+    if (!token || !token.id) {
+      console.error("⛔ No token/session found!");
+      return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
+    }
+*/
+
+const session = await getServerSession(authOptions);
+
+if (!session || !session.user?.id) {
+  console.error("⛔ No session or user ID found!");
+  return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
+}
 
   const { content, parentId } = await req.json();
 
@@ -20,7 +31,7 @@ export async function POST(req: NextRequest) {
       data: {
         content,
         parentId: parentId || null,
-        authorId: token.id,
+        authorId: session.user.id,
       },
       include: {
         author: true,
@@ -33,7 +44,7 @@ export async function POST(req: NextRequest) {
         where: { id: parentId },
       });
 
-      if (parentComment && parentComment.authorId !== token.id) {
+      if (parentComment && parentComment.authorId !== session.user.id) {
         await prisma.notification.create({
           data: {
             userId: parentComment.authorId,
