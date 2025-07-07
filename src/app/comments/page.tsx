@@ -4,8 +4,6 @@ import { useSession, signOut } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
-import type { Comment } from '@prisma/client'; // add this import at the top
-
 import CommentList from '@/components/CommentList';
 import CommentForm from '@/components/CommentForm';
 import NotificationBell from '@/components/NotificationBell';
