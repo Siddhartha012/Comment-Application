@@ -5,6 +5,7 @@ import prisma from '@/lib/db';
 //import { getToken } from "next-auth/jwt";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
+import type { Session } from "next-auth";
 
 // POST a new comment (with optional parentId and notification trigger)
 export async function POST(req: NextRequest) {
