@@ -15,7 +15,7 @@ export async function PATCH(req: NextRequest) {
   }
 */
 
-const session = await getServerSession(req, authOptions) as Session | null;
+const session = await getServerSession( authOptions) as Session | null;
 
   if (!session || !session.user?.id) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
