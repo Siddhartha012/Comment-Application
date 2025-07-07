@@ -11,6 +11,7 @@ export interface Comment {
   authorId: string;
   createdAt: string;
   updatedAt: string;
+  deletedAt?: string | null;
   author: Author;
   replies?: Comment[];
 }
