@@ -6,10 +6,14 @@ import prisma from '@/lib/db';
 import { Session } from "next-auth";
 
 export async function PATCH(req: NextRequest) {
-  const session = await getServerSession(authOptions);
-  if (!session) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  }
+  
+//
+const session: Session | null = await getServerSession(authOptions);
+
+if (!session || !session.user || comment.authorId !== session.user.id) {
+  return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+}
+//
 
   const { content } = await req.json();
 
