@@ -18,7 +18,13 @@ export default function CommentsPage() {
   //const [comments, setComments] = useState([]);
  //const [comments, setComments] = useState<Comment[]>([]);
 
- type SafeComment = Omit<Comment, 'editedAt' | 'deletedAt'>;
+type SafeComment = {
+  id: string;
+  content: string;
+  createdAt: string; // ✅ not Date
+  authorId: string;
+  parentId: string | null;
+};
 
 const [comments, setComments] = useState<SafeComment[]>([]);
  
