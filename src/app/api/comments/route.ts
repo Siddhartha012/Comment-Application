@@ -11,7 +11,7 @@ import type { Session } from "next-auth";
 export async function POST(req: NextRequest) {
   
 
-const session = await getServerSession(authOptions) as Session | null;;
+const session = await getServerSession(authOptions) as Session | null;
 
 if (!session || !session.user?.id) {
   console.error("⛔ No session or user ID found!");
