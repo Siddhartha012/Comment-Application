@@ -32,7 +32,9 @@ const session = await getServerSession(req, authOptions) as Session | null;
 
   const comment = await prisma.comment.findUnique({ where: { id } });
 
-  if (!comment || comment.authorId !== session.user.id) {
+//  if (!comment || comment.authorId !== session.user.id) {
+if (!comment || !session.user?.id || comment.authorId !== session.user.id) {
+
     return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
   }
 
