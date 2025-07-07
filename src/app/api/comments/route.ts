@@ -8,15 +8,9 @@ import { authOptions } from "@/lib/auth";
 
 // POST a new comment (with optional parentId and notification trigger)
 export async function POST(req: NextRequest) {
-  /* 
-  const token = await getToken({ req }); // using JWT strategy
-    if (!token || !token.id) {
-      console.error("⛔ No token/session found!");
-      return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
-    }
-*/
+  
 
-const session = await getServerSession(authOptions);
+const session = await getServerSession(authOptions) as Session | null;;
 
 if (!session || !session.user?.id) {
   console.error("⛔ No session or user ID found!");
