@@ -3,7 +3,6 @@ import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/lib/auth';
 import prisma from '@/lib/db';
-import { Session } from "next-auth";
 
 export async function PATCH(req: NextRequest) {
   
@@ -21,7 +20,7 @@ export async function PATCH(req: NextRequest) {
     return NextResponse.json({ error: 'Invalid comment ID' }, { status: 400 });
   }
 
-  
+
   const comment = await prisma.comment.findUnique({ where: { id } });
 
   if (!comment || comment.authorId !== session.user.id) {
