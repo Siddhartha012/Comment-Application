@@ -2,7 +2,7 @@
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "./auth";
 
-import { Session } from "next-auth";
+//import { Session } from "next-auth";
 
 export async function requireSession() {
   const session = await getServerSession(authOptions);
