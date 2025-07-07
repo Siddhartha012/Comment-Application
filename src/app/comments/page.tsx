@@ -21,7 +21,7 @@ type SafeComment = {
   content: string;
   createdAt: string; // ✅ not Date
   authorId: string;
-  parentId: string | null;
+  parentId?: string | null;
 };
 
 const [comments, setComments] = useState<SafeComment[]>([]);
