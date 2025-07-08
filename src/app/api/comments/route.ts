@@ -57,6 +57,7 @@ if (!session || !session.user?.id) {
 }
 
 // GET: Retrieve all comments
+
 export async function GET() {
   try {
     const comments = await prisma.comment.findMany({
@@ -66,9 +67,14 @@ export async function GET() {
         replies: {
           include: {
             author: true,
-          },
-        },
-      },
+            replies: {
+              include: {
+                author: true
+              }
+            }
+          }
+        }
+      }, // ✅ 
       orderBy: { createdAt: 'desc' },
     });
 

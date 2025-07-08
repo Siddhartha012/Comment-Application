@@ -1,3 +1,5 @@
+//src/app/comments/page.tsx
+
 'use client';
 
 import { useSession, signOut } from 'next-auth/react';
@@ -15,18 +17,7 @@ export default function CommentsPage() {
   const { data: session, status } = useSession();
   const router = useRouter();
 
-  /*
-type SafeComment = {
-  id: string;
-  content: string;
-  createdAt: string; // ✅ not Date
-  authorId: string;
-  parentId?: string | null;
-};
-
-const [comments, setComments] = useState<SafeComment[]>([]);
- */
-
+  
 
   const [comments, setComments] = useState<Comment[]>([]); // ✅ Use full Comment type
 
